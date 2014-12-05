@@ -23,10 +23,10 @@ var RAX_NODES = {};
 var ETCD_DATA = {};
 
 var rax = pkgcloud.loadbalancer.createClient({
-  region: process.env.REGION || 'DFW',
+  region: process.env.REGION || process.env.OS_REGION_NAME || 'DFW',
   provider: 'rackspace',
-  username: process.env.RAX_ACCOUNT,
-  apiKey: process.env.RAX_API
+  username: process.env.RAX_ACCOUNT || process.env.OS_USERNAME,
+  apiKey: process.env.RAX_API || process.env.OS_PASSWORD
 });
 
 getEtcd();
