@@ -1,0 +1,27 @@
+[Unit]
+Description=Rackspace LB Configurator
+After=docker.service
+After=etcd.service
+
+Requires=docker.service
+Requires=etcd.service
+
+[Service]
+EnvironmentFile=/etc/environment
+User=core
+
+Type=simple
+
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill rax-lb-config
+ExecStartPre=-/usr/bin/docker rm rax-lb-config
+ExecStartPre=-/usr/bin/docker pull yodlr/rax-lb-config:latest
+ExecStart=-/usr/bin/docker run --name rax-lb-config \
+      -e RAX_ACCOUNT=<RACKSPACE_ACCOUNT> \
+      -e RAX_API=<RACKSPACE_API_KEY> \
+      -v /var/log:/var/log \
+      yodlr/rax-lb-config:latest
+ExecStop=-/usr/bin/docker kill rax-lb-config
+
+[X-Fleet]
+MachineOf=rax-lb-config.timer

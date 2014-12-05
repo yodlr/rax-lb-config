@@ -1,0 +1,9 @@
+[Unit]
+Description=Rackspace LB Config Timer
+
+[Timer]
+OnCalendar=*:0/2
+Persistent=true
+
+[Install]
+WantedBy=timers.target
