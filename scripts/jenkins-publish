@@ -1,9 +1,0 @@
-#!/bin/bash
-set -e
-service=rax-lb-config
-branch=$(echo $GIT_BRANCH | cut -d/ -f 2)
-commit=$(git rev-parse --short HEAD)
-docker tag -f $service:$branch hub.speakit.io/$service
-docker tag -f $service:$branch hub.speakit.io/$service:jenkins_$BUILD_NUMBER
-docker tag -f $service:$branch hub.speakit.io/$service:$commit
-docker push hub.speakit.io/$service
